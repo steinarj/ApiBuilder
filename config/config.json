@@ -1,0 +1,22 @@
+{
+  "development": {
+    "dialect": "sqlite",
+    "storage": "./db.development.sqlite"
+  },
+  "test": {
+    "username": "root",
+    "password": "tuvers08",
+    "database": "CRM",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dialect": "mysql"
+  },
+  "production": {
+    "database": "CRM",
+    "username": "root",
+    "password": "tuvers08",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dialect": "mysql"
+  }
+}
