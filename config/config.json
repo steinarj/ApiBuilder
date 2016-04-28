@@ -3,6 +3,16 @@
     "dialect": "sqlite",
     "storage": "./db.development.sqlite"
   },
+  "mssql": {
+    "username": "localhost",
+    "password": "test",
+    "database": "CRM",
+    "host": "localhost",
+    "dialect": "mssql",
+    "dialeactOptions": {
+      "instanceName": "SQLEXPRESS"
+    }
+  },
   "test": {
     "username": "root",
     "password": "",

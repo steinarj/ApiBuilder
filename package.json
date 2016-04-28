@@ -15,11 +15,12 @@
     "express": "~4.13.1",
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
+    "mysql": "~2.10.2",
     "sequelize": "^3.3.2",
     "sequelize-cli": "^1.7.1",
     "serve-favicon": "~2.3.0",
     "sqlite3": "^3.0.8",
-    "mysql": "~2.10.2"
+    "tedious": "^1.14.0"
   },
   "devDependencies": {
     "bluebird": "^2.9.33",

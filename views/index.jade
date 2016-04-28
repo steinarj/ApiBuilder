@@ -40,7 +40,12 @@ block content
             input(type="text", name="name")
             input(type="text", name="email")
             input(type="submit")
-
+    h2 Creating a new Customer without email
+        form(action="/customers", method="post")
+            input(type="hidden" name="clientId" value="99999999999900")
+            input(type="text", name="id" )
+            input(type="text", name="name")
+            input(type="submit")
 
     each customer in customers
         li
