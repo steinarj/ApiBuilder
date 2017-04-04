@@ -2,7 +2,6 @@
 
 var app      = require('../../app');
 var Bluebird = require('bluebird');
-var expect   = require('expect.js');
 var request  = require('supertest');
 
 describe('user creation page', function () {
@@ -11,7 +10,8 @@ describe('user creation page', function () {
 
         return Bluebird.all([
             this.models.Task.destroy({ truncate: true }),
-            this.models.User.destroy({ truncate: true })
+            this.models.User.destroy({ truncate: true }),
+            this.models.Customer.destroy({truncate: true})
         ]);
     });
 
@@ -22,7 +22,7 @@ describe('user creation page', function () {
     it('lists a user if there is one', function (done) {
         this.models.User.create({ username: 'johndoe' }).then(function () {
             request(app).get('/').expect(/johndoe/, done);
-        })
+        });
     });
 
     it('lists the tickets for the user if available', function (done) {

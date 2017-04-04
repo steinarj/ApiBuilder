@@ -9,6 +9,23 @@ router.post('/create', function(req, res) {
         res.redirect('/');
     });
 });
+router.get('/', function (req, res) {
+    models.User.findAll({
+
+    }).then(function(users) {
+        res.send(users);
+    });
+});
+
+router.get('/:id/', function (req, res) {
+    models.User.findOne({
+        where: {
+            id: req.params.id
+        }
+    }).then(function(user) {
+        res.send(user);
+    });
+});
 
 router.get('/:user_id/destroy', function(req, res) {
     models.User.destroy({

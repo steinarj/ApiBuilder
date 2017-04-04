@@ -22,4 +22,14 @@ router.get('/', function(req, res) {
     });
 });
 
+router.get('/test', function(req, res) {
+    var fs = require('fs');
+    var index = fs.readFileSync('./views/index2.html');
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end(index);
+
+
+});
+
 module.exports = router;

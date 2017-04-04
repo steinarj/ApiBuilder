@@ -10,18 +10,19 @@ describe('Customer creation page', function () {
         this.models = require('../../models');
 
         return Bluebird.all([
-            this.models.Customer.destroy({ truncate: true }),
+            this.models.Customer.destroy({ truncate: true })
         ]);
     });
 
+
     it('loads correctly', function (done) {
-        request(app).get('/customers').expect(200, done);
+        request(app).get('/customers/').expect(200, done);
     });
 
     it('lists a customer if there is one', function (done) {
-        this.models.Customer.create({clientId: 99999999999900, id: 300, name: 'IBM Inc' }).then(function () {
-            request(app).get('/customers').expect(/IBM Inc/, done);
-        })
+        this.models.Customer.create({clientId: 99999999999900, id: 300, name: 'IBM Inc', companyType:1 }).then(function () {
+            request(app).get('/').expect(/IBM Inc/, done);
+        });
     });
 
 

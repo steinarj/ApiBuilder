@@ -1,0 +1,15 @@
+{
+  "limit": {
+    "presence": true,
+    "numericality": {
+      "onlyInteger": true,
+      "greaterThan": 0,
+      "lessThanOrEqualTo": 100
+
+    }
+  },
+  "page": {
+    "presence": true
+
+  }
+}

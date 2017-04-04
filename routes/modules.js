@@ -7,7 +7,6 @@ var router  = express.Router();
 var validate = require('validate.js');
 
 var io = require('socket.io-client');
-//var socket = io.connect('http://sockettest.api.24sevenoffice.com', {reconnect: true});
 var socket = io.connect('http://localhost:3009', {reconnect: true});
 
 // Add a connect listener
@@ -17,39 +16,19 @@ socket.on('connect', function (socket) {
 });
 
 socket.on('disconnect', function (socket) {
-    console.log('disconnected')
-    //console.log('Disconnected ffrom socket $s', socket.name);
+    console.log('disconnected');
 });
-///socket.emit('CH01', 'me', 'test msg');
+
+router.get('/navigation', function(req, res) {
+
+    models.Module.findAndCountAll({
+            //attributes: ['id', 'name'],
+            offset: 0,//start,
+            limit: 100// limit //filter.limit
+        }).then(function(modules) {
 
 
-//var filters = require('../filters');
-
-router.get('/', function(req, res) {
-/*
-    if(req.query.filter){
-        var filter = req.query.filter;
-        if(typeof filter === 'string')
-            filter = JSON.parse(filter);
-        
-        var isFilterOK = validate(filter, filters.Customer);
-
-        if(typeof isFilterOK == 'object' )
-            //throw new Error({code: 500, message: isFilterOK })
-            res.send(isFilterOK);
-        return;
-    }*/
-    var start  = parseInt(req.query.start);
-    var limit  = parseInt(req.query.limit);
-
-    models.Customer.findAndCountAll({
-        //attributes: ['id', 'name'],
-        offset: 0,//start,
-        limit: 50// limit //filter.limit
-        }
-        /*{ limit: 50 }*/).then(function(customers) {
-        
-        res.send(customers);
+        res.send(modules);
         /*res.render('index', {
          title: 'Express',
          users: users
@@ -58,6 +37,66 @@ router.get('/', function(req, res) {
 });
 
 
+router.get('/navigation/admin/', function(req, res) {
+    var parentId = 0
+    if(req.param("node")){
+        parentId = req.param("node");
+    }
+
+
+    models.Module.findAndCountAll({
+        //attributes: ['id', 'name'],
+        offset: 0,//start,
+        limit: 100,// limit //filter.limit
+        where: {
+            parentId: parentId
+        }
+    }).then(function(modules) {
+
+        res.send({
+            children: modules.rows
+        });
+
+        //res.send(modules);
+        /*res.render('index', {
+         title: 'Express',
+         users: users
+         });*/
+    });
+});
+
+
+router.get('/navigation/admin/:id', function(req, res) {
+    var parentId = 0
+    if(req.params.id === "root" ){
+            parentId = 0;
+    }
+
+    models.Module.findAndCountAll({
+        //attributes: ['id', 'name'],
+        offset: 0,//start,
+        limit: 100,// limit //filter.limit
+        where: {
+            parentId: parentId
+        }
+    }).then(function(modules) {
+
+        res.send({
+            name: ".",
+            expanded: true,
+            leaf:false,
+            children: modules.rows
+        });
+
+        //res.send(modules);
+        /*res.render('index', {
+         title: 'Express',
+         users: users
+         });*/
+    });
+});
+
+/*
 router.get('/:id', function(req, res) {
 
     models.Customer.findOne({
@@ -68,20 +107,23 @@ router.get('/:id', function(req, res) {
         res.send();
     });
 });
+*/
+router.post('/navigation/admin/', function(req, res) {
+    req.body.id = parseInt(new Date().valueOf().toString().substr(0,9));
 
-router.post('/', function(req, res) {
 
-    models.Customer.create(req.body)
-        .then(function() {
-            //res.send(customer);
-            res.redirect('/');
+
+    models.Module.create(req.body)
+        .then(function(module) {
+           res.send(module);
+
         }).catch(function(err) {
             res.send(err);
         }
     );
 
 });
-
+/*
 router.put('/:id', function(req, res) {
     models.Customer.update(req.body,
         {
@@ -127,6 +169,7 @@ router.delete('/:id', function(req,res){
         res.redirect('/');
     });
 });
+*/
 
 
 module.exports = router;

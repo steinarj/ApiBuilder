@@ -2,21 +2,16 @@
 
 module.exports = function(sequelize, DataTypes) {
 
-    var Customer = sequelize.define("Customer", {
+    return sequelize.define("Client", {
 
-        clientId: { primaryKey: true, type: DataTypes.BIGINT, allowNull: false },
-        id: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
-        companyType: { type:DataTypes.INTEGER, allowNull: false, defaultValue: 1},
+        id: { primaryKey: true, type: DataTypes.BIGINT, allowNull: false },
         name: { type: DataTypes.STRING, allowNull: false,
             validate:{
                 len: [2,100]
             }
         },
         organizationNumber: {
-          type: DataTypes.STRING
-        },
-        phone:{
-          type: DataTypes.STRING
+            type: DataTypes.STRING
         },
         email: {
             type: DataTypes.STRING,
@@ -37,6 +32,5 @@ module.exports = function(sequelize, DataTypes) {
         paranoid: true
 
     });
-
-    return Customer;
+    
 };
